@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;  // ← ADD THIS
+using System.IO;
 
 namespace LPR381
 {
@@ -25,9 +25,11 @@ namespace LPR381
             Console.WriteLine("Output file path: " + outputFilePath);
             Console.WriteLine();
 
+            // ----- READ INPUT FILE -----
             InputFileReader reader = new InputFileReader();
             reader.Read(inputFilePath);
 
+            // Display what was read
             Console.WriteLine("Objective Type: " + reader.ObjectiveType);
             Console.Write("Objective Coefficients: ");
             foreach (var c in reader.ObjCoefficients)
@@ -47,9 +49,17 @@ namespace LPR381
             foreach (var s in reader.SignRestrictions)
                 Console.Write(s + " ");
 
+            // ----- WRITE OUTPUT FILE -----
             OutputWriter.Write(outputFilePath, reader);
             Console.WriteLine("\n\nOutput written to: " + outputFilePath);
 
+            // ----- CANONICAL FORM -----
+            Console.WriteLine("\n\n===== CONVERTING TO CANONICAL FORM =====");
+            CanonicalForm canonical = new CanonicalForm();
+            canonical.Convert(reader);
+            canonical.Display();
+
+            Console.WriteLine("\nPress Enter to exit...");
             Console.ReadLine();
         }
     }

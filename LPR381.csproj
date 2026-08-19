@@ -48,6 +48,7 @@
     <Compile Include="InputFileReader.cs" />
     <Compile Include="Constraints.cs" />
     <Compile Include="OutputWriter.cs" />
+	<Compile Include="CanonicalForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
