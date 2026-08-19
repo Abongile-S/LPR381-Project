@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;  // ← ADD THIS
 
 namespace LPR381
 {
@@ -10,17 +11,23 @@ namespace LPR381
     {
         static void Main(string[] args)
         {
-            // Input file path
-            string inputFilePath = @"C:\LPR381\LPR381 PROJECT\input.txt";
+            // Get the folder where the .exe is running
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
-            // Output file path
-            string outputFilePath = @"C:\LPR381\LPR381 PROJECT\output.txt";
+            // Go up to the project folder (bin\Debug\ -> project folder)
+            string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\..\"));
 
-            // Read the input file
+            // Input and output file paths (relative to project folder)
+            string inputFilePath = Path.Combine(projectPath, "input.txt");
+            string outputFilePath = Path.Combine(projectPath, "output.txt");
+
+            Console.WriteLine("Input file path: " + inputFilePath);
+            Console.WriteLine("Output file path: " + outputFilePath);
+            Console.WriteLine();
+
             InputFileReader reader = new InputFileReader();
             reader.Read(inputFilePath);
 
-            // Display results in console
             Console.WriteLine("Objective Type: " + reader.ObjectiveType);
             Console.Write("Objective Coefficients: ");
             foreach (var c in reader.ObjCoefficients)
@@ -40,7 +47,6 @@ namespace LPR381
             foreach (var s in reader.SignRestrictions)
                 Console.Write(s + " ");
 
-            // Write to output file
             OutputWriter.Write(outputFilePath, reader);
             Console.WriteLine("\n\nOutput written to: " + outputFilePath);
 
