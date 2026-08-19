@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InputFileReader.cs" />
+    <Compile Include="Constraints.cs" />
+    <Compile Include="OutputWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

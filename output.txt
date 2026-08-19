@@ -1,0 +1,11 @@
+===========================================
+         LP MODEL SUMMARY
+===========================================
+Objective Type: max
+Objective Coefficients: 4 2 2 1 10 
+
+Constraints:
+12 2 1 1 4 <= 15
+
+Sign Restrictions: bin bin bin bin bin 
+===========================================
