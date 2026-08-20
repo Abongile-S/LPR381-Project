@@ -6,7 +6,7 @@ namespace LPR381
 {
     public class OutputWriter
     {
-        public static void Write(string filePath, InputFileReader reader)
+        public static void Write(string filePath, InputFileReader reader, string canonicalLog, string primalLog, string revisedLog)
         {
             using (StreamWriter writer = new StreamWriter(filePath))
             {
@@ -32,6 +32,20 @@ namespace LPR381
                     writer.Write(s + " ");
                 writer.WriteLine();
                 writer.WriteLine("===========================================");
+
+                writer.WriteLine(canonicalLog);
+
+                writer.WriteLine();
+                writer.WriteLine("###########################################");
+                writer.WriteLine("#            PRIMAL SIMPLEX              #");
+                writer.WriteLine("###########################################");
+                writer.WriteLine(primalLog);
+
+                writer.WriteLine();
+                writer.WriteLine("###########################################");
+                writer.WriteLine("#         REVISED PRIMAL SIMPLEX         #");
+                writer.WriteLine("###########################################");
+                writer.WriteLine(revisedLog);
             }
         }
     }

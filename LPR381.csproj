@@ -49,6 +49,8 @@
     <Compile Include="Constraints.cs" />
     <Compile Include="OutputWriter.cs" />
 	<Compile Include="CanonicalForm.cs" />
+	<Compile Include="PrimalSimplex.cs" />
+	  <Compile Include="RevisedSimplex.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

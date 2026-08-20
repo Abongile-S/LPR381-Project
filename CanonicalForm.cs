@@ -1,106 +1,131 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace LPR381
 {
     public class CanonicalForm
     {
-        public List<string> Variables { get; set; }      // x1, x2, s1, e1, a1, ...
-        public List<List<double>> Tableau { get; set; }  // Coefficient rows
-        public List<string> Basis { get; set; }          // Basic variables
-        public List<double> RHS { get; set; }            // Right-hand side values
+        public List<string> Variables { get; set; }
+        public List<List<double>> Tableau { get; set; }
+        public List<string> Basis { get; set; }
+        public List<double> RHS { get; set; }
+        public bool IsMax { get; private set; }
+
+        private const double BigM = 1000000;
 
         public void Convert(InputFileReader reader)
         {
+            IsMax = reader.ObjectiveType.Trim().ToLower() == "max";
             int numVars = reader.ObjCoefficients.Count;
-            int numConstraints = reader.Constraints.Count;
 
-            // Start with original variables
+            int slackCount = 0, surplusCount = 0, artificialCount = 0;
+            foreach (var con in reader.Constraints)
+            {
+                if (con.Relation == "<=") slackCount++;
+                else if (con.Relation == ">=") { surplusCount++; artificialCount++; }
+                else if (con.Relation == "=") artificialCount++;
+            }
+
+            int totalCols = numVars + slackCount + surplusCount + artificialCount;
+            int slackStart = numVars;
+            int surplusStart = numVars + slackCount;
+            int artificialStart = numVars + slackCount + surplusCount;
+
             Variables = new List<string>();
-            for (int i = 1; i <= numVars; i++)
-                Variables.Add("x" + i);
+            for (int i = 1; i <= numVars; i++) Variables.Add("x" + i);
+            for (int i = 1; i <= slackCount; i++) Variables.Add("s" + i);
+            for (int i = 1; i <= surplusCount; i++) Variables.Add("e" + i);
+            for (int i = 1; i <= artificialCount; i++) Variables.Add("a" + i);
 
-            // Track slack/excess/artificial count
-            int slackCount = 0;
-            int excessCount = 0;
-            int artificialCount = 0;
-
-            // Initialize tableau (rows = constraints + 1 for z-row)
-            Tableau = new List<List<double>>();
-            RHS = new List<double>();
-            Basis = new List<string>();
-
-            // ---- Z-ROW ----
-            List<double> zRow = new List<double>();
+            var effectiveCoeffs = new List<double>();
             foreach (var c in reader.ObjCoefficients)
-                zRow.Add(-c);  // z - c1x1 - c2x2 - ... = 0
+                effectiveCoeffs.Add(IsMax ? c : -c);
 
-            // We'll add slack/excess/artificial columns later
+            Tableau = new List<List<double>>();
+            Basis = new List<string>();
+            RHS = new List<double>();
+
+            var zRow = new List<double>(new double[totalCols]);
+            for (int j = 0; j < numVars; j++)
+                zRow[j] = -effectiveCoeffs[j];
+            for (int k = 0; k < artificialCount; k++)
+                zRow[artificialStart + k] = BigM;
+
             Tableau.Add(zRow);
             RHS.Add(0);
             Basis.Add("z");
 
-            // ---- CONSTRAINTS ----
-            for (int i = 0; i < numConstraints; i++)
+            int sIdx = 0, eIdx = 0, aIdx = 0;
+            var artificialRows = new List<int>();
+
+            foreach (var con in reader.Constraints)
             {
-                var constraint = reader.Constraints[i];
-                List<double> row = new List<double>();
+                var row = new List<double>(new double[totalCols]);
+                for (int j = 0; j < numVars; j++)
+                    row[j] = con.Coefficients[j];
 
-                // Coefficients for original variables
-                foreach (var c in constraint.Coefficients)
-                    row.Add(c);
+                string basisVar;
 
-                // Add variables based on relation
-                if (constraint.Relation == "<=")
+                if (con.Relation == "<=")
                 {
-                    slackCount++;
-                    Variables.Add("s" + slackCount);
-                    row.Add(1);      // Slack variable coefficient
-                    Basis.Add("s" + slackCount);
+                    row[slackStart + sIdx] = 1;
+                    basisVar = "s" + (sIdx + 1);
+                    sIdx++;
                 }
-                else if (constraint.Relation == ">=")
+                else if (con.Relation == ">=")
                 {
-                    excessCount++;
-                    artificialCount++;
-                    Variables.Add("e" + excessCount);
-                    Variables.Add("a" + artificialCount);
-                    row.Add(-1);     // Excess variable coefficient
-                    row.Add(1);      // Artificial variable coefficient
-                    Basis.Add("a" + artificialCount);
+                    row[surplusStart + eIdx] = -1;
+                    row[artificialStart + aIdx] = 1;
+                    basisVar = "a" + (aIdx + 1);
+                    artificialRows.Add(Tableau.Count);
+                    eIdx++; aIdx++;
                 }
-                else if (constraint.Relation == "=")
+                else
                 {
-                    artificialCount++;
-                    Variables.Add("a" + artificialCount);
-                    row.Add(1);      // Artificial variable coefficient
-                    Basis.Add("a" + artificialCount);
+                    row[artificialStart + aIdx] = 1;
+                    basisVar = "a" + (aIdx + 1);
+                    artificialRows.Add(Tableau.Count);
+                    aIdx++;
                 }
 
                 Tableau.Add(row);
-                RHS.Add(constraint.RHS);
+                RHS.Add(con.RHS);
+                Basis.Add(basisVar);
             }
 
-            // Ensure all rows have the same number of columns
-            int maxCols = 0;
-            foreach (var row in Tableau)
-                if (row.Count > maxCols) maxCols = row.Count;
+            foreach (int rowIndex in artificialRows)
+            {
+                var row = Tableau[rowIndex];
+                double rowRhs = RHS[rowIndex];
+                for (int j = 0; j < totalCols; j++)
+                    zRow[j] -= BigM * row[j];
+                RHS[0] -= BigM * rowRhs;
+            }
+        }
 
-            foreach (var row in Tableau)
-                while (row.Count < maxCols)
-                    row.Add(0);
+        public string GetDisplayString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine();
+            sb.AppendLine("===== CANONICAL FORM (Big M Method) =====");
+            sb.Append("      ");
+            foreach (var v in Variables) sb.Append(v + "\t");
+            sb.AppendLine("RHS");
+
+            for (int i = 0; i < Tableau.Count; i++)
+            {
+                sb.Append((i == 0 ? "z" : "C" + i) + "[" + Basis[i] + "]\t");
+                for (int j = 0; j < Tableau[i].Count; j++)
+                    sb.Append(Tableau[i][j].ToString("F3") + "\t");
+                sb.AppendLine(RHS[i].ToString("F3"));
+            }
+            return sb.ToString();
         }
 
         public void Display()
         {
-            Console.WriteLine("\n===== CANONICAL FORM =====");
-            for (int i = 0; i < Tableau.Count; i++)
-            {
-                for (int j = 0; j < Tableau[i].Count; j++)
-                {
-                    Console.Write(Tableau[i][j].ToString("F3") + "\t");
-                }
-                Console.WriteLine("| " + RHS[i].ToString("F3"));
-            }
+            Console.Write(GetDisplayString());
         }
     }
 }
