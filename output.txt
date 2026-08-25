@@ -1,6 +1,6 @@
-===========================================
+========================================
          LP MODEL SUMMARY
-===========================================
+========================================
 Objective Type: max
 Objective Coefficients: 2 3 3 5 2 4 
 
@@ -10,111 +10,729 @@ Constraints:
 Sign Restrictions: bin bin bin bin bin bin 
 ===========================================
 
-===== CANONICAL FORM (Big M Method) =====
-      x1	x2	x3	x4	x5	x6	s1	RHS
-z[z]	-2,000	-3,000	-3,000	-5,000	-2,000	-4,000	0,000	0,000
-C1[s1]	11,000	8,000	6,000	14,000	10,000	10,000	1,000	40,000
-
-
 ###########################################
-#            PRIMAL SIMPLEX              #
+#            CUTTING PLANE              #
 ###########################################
+========================================
+ CUTTING PLANE ALGORITHM
+========================================
+Objective: MAX
+Variables: 6
+Constraints: 1
+Binary Variables: 6
 
-===== PRIMAL SIMPLEX ALGORITHM =====
-Objective: max
+--- ITERATION 0: LP RELAXATION ---
+LP Relaxation Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
 
---- Iteration 0 ---
-      x1	x2	x3	x4	x5	x6	s1	RHS
-z[z]	-2,000	-3,000	-3,000	-5,000	-2,000	-4,000	0,000	0,000
-C1[s1]	11,000	8,000	6,000	14,000	10,000	10,000	1,000	40,000
-Pivot Column: x4
-Pivot Row: C1
+--- STARTING GOMORY CUTS ---
 
---- Iteration 1 ---
-      x1	x2	x3	x4	x5	x6	s1	RHS
-z[z]	1,929	-0,143	-0,857	0,000	1,571	-0,429	0,357	14,286
-C1[x4]	0,786	0,571	0,429	1,000	0,714	0,714	0,071	2,857
-Pivot Column: x3
-Pivot Row: C1
+--- ITERATION 1: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 1...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
 
---- Iteration 2 ---
-      x1	x2	x3	x4	x5	x6	s1	RHS
-z[z]	3,500	1,000	0,000	2,000	3,000	1,000	0,500	20,000
-C1[x3]	1,833	1,333	1,000	2,333	1,667	1,667	0,167	6,667
+--- ITERATION 2: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 2...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
 
-OPTIMAL SOLUTION FOUND!
+--- ITERATION 3: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 3...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
 
---- OPTIMAL SOLUTION ---
-x1 = 0,000
-x2 = 0,000
-x3 = 6,667
-x4 = 0,000
-x5 = 0,000
-x6 = 0,000
+--- ITERATION 4: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 4...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
 
-Optimal Z = 20,000
+--- ITERATION 5: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 5...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 6: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 6...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 7: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 7...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 8: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 8...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 9: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 9...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 10: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 10...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 11: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 11...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 12: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 12...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 13: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 13...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 14: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 14...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 15: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 15...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 16: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 16...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 17: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 17...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 18: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 18...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 19: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 19...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 20: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 20...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 21: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 21...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 22: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 22...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 23: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 23...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 24: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 24...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 25: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 25...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 26: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 26...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 27: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 27...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 28: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 28...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 29: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 29...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 30: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 30...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 31: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 31...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 32: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 32...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 33: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 33...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 34: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 34...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 35: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 35...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 36: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 36...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 37: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 37...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 38: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 38...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 39: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 39...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 40: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 40...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 41: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 41...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 42: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 42...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 43: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 43...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 44: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 44...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 45: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 45...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 46: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 46...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 47: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 47...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 48: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 48...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 49: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 49...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 50: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 50...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 51: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 51...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 52: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 52...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 53: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 53...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 54: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 54...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 55: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 55...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 56: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 56...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 57: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 57...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 58: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 58...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 59: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 59...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 60: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 60...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 61: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 61...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 62: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 62...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 63: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 63...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 64: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 64...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 65: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 65...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 66: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 66...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 67: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 67...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 68: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 68...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 69: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 69...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 70: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 70...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 71: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 71...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 72: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 72...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 73: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 73...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 74: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 74...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 75: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 75...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 76: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 76...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 77: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 77...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 78: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 78...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 79: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 79...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 80: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 80...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 81: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 81...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 82: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 82...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 83: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 83...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 84: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 84...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 85: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 85...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 86: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 86...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 87: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 87...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 88: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 88...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 89: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 89...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 90: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 90...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 91: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 91...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 92: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 92...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 93: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 93...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 94: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 94...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 95: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 95...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 96: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 96...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 97: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 97...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 98: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 98...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 99: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 99...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+--- ITERATION 100: ADDING GOMORY CUT ---
+Gomory Cut Generated:
+  x3 >= 7
+Re-solving with cut 100...
+New Solution: Z = 0.000
+Solution: [0.000, 0.000, 6.667, 0.000, 0.000, 0.000]
+
+[WARNING] Max iterations reached (100)
+
+--- BEST CANDIDATE ---
+[ERROR] No feasible integer solution found.
 
 
-###########################################
-#         REVISED PRIMAL SIMPLEX         #
-###########################################
-
-===== REVISED PRIMAL SIMPLEX ALGORITHM =====
-Objective: max
-
---- Iteration 0 ---
-Basis: s1
-B Inverse (Product Form):
-  1,000	
-y (Simplex Multipliers): 0,000	
-Price Out (reduced costs for non-basic variables):
-  x1: z-c = -2,000
-  x2: z-c = -3,000
-  x3: z-c = -3,000
-  x4: z-c = -5,000
-  x5: z-c = -2,000
-  x6: z-c = -4,000
-Current Z = 0,000
-Entering: x4   Leaving: s1
-
---- Iteration 1 ---
-Basis: x4
-B Inverse (Product Form):
-  0,071	
-y (Simplex Multipliers): 0,357	
-Price Out (reduced costs for non-basic variables):
-  x1: z-c = 1,929
-  x2: z-c = -0,143
-  x3: z-c = -0,857
-  x5: z-c = 1,571
-  x6: z-c = -0,429
-  s1: z-c = 0,357
-Current Z = 14,286
-Entering: x3   Leaving: x4
-
---- Iteration 2 ---
-Basis: x3
-B Inverse (Product Form):
-  0,167	
-y (Simplex Multipliers): 0,500	
-Price Out (reduced costs for non-basic variables):
-  x1: z-c = 3,500
-  x2: z-c = 1,000
-  x4: z-c = 2,000
-  x5: z-c = 3,000
-  x6: z-c = 1,000
-  s1: z-c = 0,500
-Current Z = 20,000
-
-OPTIMAL SOLUTION FOUND!
-
---- OPTIMAL SOLUTION ---
-x1 = 0,000
-x2 = 0,000
-x3 = 6,667
-x4 = 0,000
-x5 = 0,000
-x6 = 0,000
-
-Optimal Z = 20,000
-
+========================================
+         END OF REPORT
+========================================
