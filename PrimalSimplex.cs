@@ -14,6 +14,14 @@ namespace LPR381
         private string objectiveType;
         private bool isMax;
 
+        // ---- Public access to the FINAL solved tableau ----
+        public List<List<double>> FinalTableau => tableau;
+        public List<double> FinalRHS => rhs;
+        public List<string> FinalBasis => basis;
+        public List<string> FinalVariables => variables;
+        public bool IsInfeasible { get; private set; } = false;
+        public bool IsUnbounded { get; private set; } = false;
+
         private StringBuilder log = new StringBuilder();
         public string Log => log.ToString();
 
@@ -69,6 +77,7 @@ namespace LPR381
                 if (pivotCol == -1)
                 {
                     Print("\nUNBOUNDED SOLUTION!");
+                    IsUnbounded = true;
                     break;
                 }
 
@@ -76,6 +85,7 @@ namespace LPR381
                 if (pivotRow == -1)
                 {
                     Print("\nUNBOUNDED SOLUTION!");
+                    IsUnbounded = true;
                     break;
                 }
 
@@ -165,6 +175,7 @@ namespace LPR381
                 if (basis[i].StartsWith("a") && rhs[i] > 1e-6)
                 {
                     Print("\n*** MODEL IS INFEASIBLE (artificial variable " + basis[i] + " remains positive) ***");
+                    IsInfeasible = true;
                     return true;
                 }
             }
