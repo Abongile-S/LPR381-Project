@@ -1,32 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using LPR381.Events;
-using LPR381.Utils;
 
-namespace LPR381.IP
+namespace LPR381
 {
     public class CuttingPlane
     {
-        // ===== Logging =====
-        private readonly StringBuilder log = new StringBuilder();
-        public string Log => log.ToString();
-
-
         private List<List<double>> tableau;
         private List<double> rhs;
         private List<string> basis;
         private List<string> variables;
         private List<string> rowLabels;
-        private string objectiveType;
         private bool isMax;
-        private List<List<double>> finalTableau;
+        private int gomoryCount = 0;
 
-        public bool IsInfeasible { get; private set; } = false;
-        public bool IsUnbounded { get; private set; } = false;
-
-        //private bool canCut { get; private set; } = false;
+        private StringBuilder log = new StringBuilder();
+        public string Log => log.ToString();
 
         private void Print(string s = "")
         {
@@ -42,116 +31,179 @@ namespace LPR381.IP
 
         public void Solve(CanonicalForm canonical, string objectiveType)
         {
-            this.objectiveType = objectiveType;
-            this.isMax = canonical.IsMax;
-            this.variables = new List<string>(canonical.Variables);
-            this.basis = new List<string>(canonical.Basis);
-            this.rhs = new List<double>(canonical.RHS);
+            isMax = canonical.IsMax;
+            variables = new List<string>(canonical.Variables);
+            basis = new List<string>(canonical.Basis);
+            rhs = new List<double>(canonical.RHS);
 
             tableau = new List<List<double>>();
             foreach (var row in canonical.Tableau)
                 tableau.Add(new List<double>(row));
 
-            rowLabels = new List<string>();
-            rowLabels.Add("z");
-            for (int i = 1; i < tableau.Count; i++)
-                rowLabels.Add("C" + i);
+            RebuildRowLabels();
 
-            Print("\n===== PRIMAL SIMPLEX ALGORITHM =====");
+            Print("\n===== CUTTING PLANE ALGORITHM (Gomory) =====");
             Print("Objective: " + objectiveType);
 
+            Print("\n--- Solving LP Relaxation with Primal Simplex ---");
+            bool ok = SolvePrimalToOptimal();
+            if (!ok) return; // infeasible or unbounded, already printed
+
+            int maxCuts = 20;
+            while (gomoryCount < maxCuts)
+            {
+                int fracRow = FindFractionalRow();
+                if (fracRow == -1)
+                {
+                    Print("\nAll basic decision variables are integer.");
+                    Print("INTEGER OPTIMAL SOLUTION FOUND!");
+                    DisplaySolution();
+                    return;
+                }
+
+                gomoryCount++;
+                Print("\n=== Adding Gomory Cut #" + gomoryCount + " (from row " + rowLabels[fracRow] + ", basis " + basis[fracRow] + ") ===");
+                AddGomoryCut(fracRow);
+
+                Print("\n--- Tableau after adding cut ---");
+                DisplayTableau();
+
+                Print("\n--- Re-optimizing with Dual Simplex ---");
+                bool feasible = SolveDualToFeasible();
+                if (!feasible)
+                {
+                    Print("\n*** MODEL IS INFEASIBLE (no more valid pivots in Dual Simplex) ***");
+                    return;
+                }
+            }
+
+            Print("\nMax number of cuts reached (" + maxCuts + ") without an all-integer solution.");
+        }
+
+        // ================= PRIMAL SIMPLEX (solve LP relaxation) =================
+
+        private bool SolvePrimalToOptimal()
+        {
             int iteration = 0;
             int maxIterations = 200;
 
             while (iteration < maxIterations)
             {
-                Print("\n--- Iteration " + iteration + " ---");
+                Print("\n--- Primal Iteration " + iteration + " ---");
                 DisplayTableau();
 
-                if (IsOptimal())
+                if (IsPrimalOptimal())
                 {
-                    Print("\nOPTIMAL PRIMAL SOLUTION FOUND!");
-                    if (!CheckFeasibility())
-                        CuttingSolution();
-                    break;
+                    Print("\nLP Relaxation optimal reached.");
+                    if (CheckArtificialInfeasibility())
+                        return false;
+                    return true;
                 }
 
-                int pivotCol = FindPivotColumn();
-                if (pivotCol == -1)
-                {
-                    Print("\nUNBOUNDED SOLUTION!");
-                    IsUnbounded = true;
-                    break;
-                }
+                int pivotCol = FindPrimalPivotColumn();
+                if (pivotCol == -1) { Print("\nUNBOUNDED SOLUTION!"); return false; }
 
-                int pivotRow = FindPivotRow(pivotCol);
-                if (pivotRow == -1)
-                {
-                    Print("\nUNBOUNDED SOLUTION!");
-                    IsUnbounded = true;
-                    break;
-                }
+                int pivotRow = FindPrimalPivotRow(pivotCol);
+                if (pivotRow == -1) { Print("\nUNBOUNDED SOLUTION!"); return false; }
 
-                Print("Pivot Column: " + variables[pivotCol]);
-                Print("Pivot Row: " + rowLabels[pivotRow]);
-
+                Print("Pivot Column: " + variables[pivotCol] + "   Pivot Row: " + rowLabels[pivotRow]);
                 Pivot(pivotRow, pivotCol);
                 basis[pivotRow] = variables[pivotCol];
-
                 iteration++;
             }
 
-            if (iteration >= maxIterations)
-                Print("\nMax iterations reached (check for cycling).");
+            Print("\nMax iterations reached (check for cycling).");
+            return false;
         }
 
-        private bool IsOptimal()
+        private bool IsPrimalOptimal()
         {
-            List<double> zRow = tableau[0];
-            for (int j = 0; j < zRow.Count; j++)
-            {
-                if (zRow[j] < -0.0001)
-                    return false;
-            }
+            for (int j = 0; j < tableau[0].Count; j++)
+                if (tableau[0][j] < -0.0001) return false;
             return true;
         }
 
-        private int FindPivotColumn()
+        private int FindPrimalPivotColumn()
         {
-            List<double> zRow = tableau[0];
             int pivotCol = -1;
             double minVal = 0;
-
-            for (int j = 0; j < zRow.Count; j++)
+            for (int j = 0; j < tableau[0].Count; j++)
             {
-                if (zRow[j] < minVal)
-                {
-                    minVal = zRow[j];
-                    pivotCol = j;
-                }
+                if (tableau[0][j] < minVal) { minVal = tableau[0][j]; pivotCol = j; }
             }
             return pivotCol;
         }
 
-        private int FindPivotRow(int pivotCol)
+        private int FindPrimalPivotRow(int pivotCol)
         {
             int pivotRow = -1;
             double minRatio = double.MaxValue;
-
             for (int i = 1; i < tableau.Count; i++)
             {
                 if (tableau[i][pivotCol] > 0.0001)
                 {
                     double ratio = rhs[i] / tableau[i][pivotCol];
-                    if (ratio < minRatio)
-                    {
-                        minRatio = ratio;
-                        pivotRow = i;
-                    }
+                    if (ratio < minRatio) { minRatio = ratio; pivotRow = i; }
                 }
             }
             return pivotRow;
         }
+
+        private bool CheckArtificialInfeasibility()
+        {
+            for (int i = 1; i < basis.Count; i++)
+            {
+                if (basis[i].StartsWith("a") && rhs[i] > 1e-6)
+                {
+                    Print("\n*** MODEL IS INFEASIBLE (artificial variable " + basis[i] + " remains positive) ***");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // ================= DUAL SIMPLEX (restore feasibility after a cut) =================
+
+        private bool SolveDualToFeasible()
+        {
+            int maxIterations = 100;
+            for (int iteration = 0; iteration < maxIterations; iteration++)
+            {
+                int leavingRow = -1;
+                double mostNegative = -1e-9;
+                for (int i = 1; i < rhs.Count; i++)
+                {
+                    if (rhs[i] < mostNegative) { mostNegative = rhs[i]; leavingRow = i; }
+                }
+
+                if (leavingRow == -1) return true; // all RHS >= 0, feasible again
+
+                int enteringCol = -1;
+                double bestRatio = double.MaxValue;
+                for (int j = 0; j < tableau[leavingRow].Count; j++)
+                {
+                    if (tableau[leavingRow][j] < -1e-9)
+                    {
+                        double ratio = tableau[0][j] / (-tableau[leavingRow][j]);
+                        if (ratio < bestRatio) { bestRatio = ratio; enteringCol = j; }
+                    }
+                }
+
+                if (enteringCol == -1) return false; // no valid pivot -> infeasible
+
+                Print("Dual Pivot -- Leaving Row: " + rowLabels[leavingRow] + " (" + basis[leavingRow] + ")   Entering: " + variables[enteringCol]);
+                Pivot(leavingRow, enteringCol);
+                basis[leavingRow] = variables[enteringCol];
+
+                Print("\n--- Dual Iteration " + iteration + " ---");
+                DisplayTableau();
+            }
+
+            Print("\nMax dual simplex iterations reached.");
+            return false;
+        }
+
+        // ================= SHARED PIVOT LOGIC =================
 
         private void Pivot(int pivotRow, int pivotCol)
         {
@@ -171,25 +223,69 @@ namespace LPR381.IP
             }
         }
 
-        private bool CheckFeasibility()
+        // ================= GOMORY CUT GENERATION =================
+
+        private int FindFractionalRow()
         {
-            for (int i = 1; i < basis.Count; i++)
+            for (int i = 1; i < tableau.Count; i++)
             {
-                if (basis[i].StartsWith("a") && rhs[i] > 1e-6)
-                {
-                    Print("\n*** MODEL IS INFEASIBLE (artificial variable " + basis[i] + " remains positive) ***");
-                    IsInfeasible = true;
-                    return true;
-                }
+                if (basis[i].StartsWith("x") && Math.Abs(rhs[i] - Math.Round(rhs[i])) > 1e-6)
+                    return i;
             }
-            return false;
+            return -1;
         }
+
+        private void AddGomoryCut(int rowIndex)
+        {
+            // 1. Take a snapshot of the fractional row's values BEFORE touching anything
+            var sourceRow = new List<double>(tableau[rowIndex]);
+            double sourceRhs = rhs[rowIndex];
+
+            // 2. Extend every existing row with a new zero column for the new Gomory slack
+            //    (indexed for-loop over the OUTER list, modifying only INNER lists -- safe)
+            int newVarIndex = tableau[0].Count;
+            for (int i = 0; i < tableau.Count; i++)
+                tableau[i].Add(0.0);
+
+            gomoryCount++; // used for naming; note: also incremented in Solve() caller before this call, that's fine, just keeps names unique
+            string newVarName = "g" + gomoryCount;
+            variables.Add(newVarName);
+
+            // 3. Build the brand-new cut row as its own separate object
+            int width = tableau[0].Count;
+            var cutRow = new List<double>(new double[width]);
+            for (int j = 0; j < sourceRow.Count; j++)
+            {
+                double frac = sourceRow[j] - Math.Floor(sourceRow[j]);
+                cutRow[j] = -frac;
+            }
+            double fracRhs = sourceRhs - Math.Floor(sourceRhs);
+            cutRow[newVarIndex] = 1.0;
+            double cutRhs = -fracRhs;
+
+            Print("Cut: " + string.Join(" ", cutRow.ConvertAll(v => v.ToString("F3"))) + " | RHS = " + cutRhs.ToString("F3"));
+
+            // 4. Only now append the finished row to the tableau/rhs/basis lists
+            tableau.Add(cutRow);
+            rhs.Add(cutRhs);
+            basis.Add(newVarName);
+
+            RebuildRowLabels();
+        }
+
+        private void RebuildRowLabels()
+        {
+            rowLabels = new List<string> { "z" };
+            for (int i = 1; i < tableau.Count; i++)
+                rowLabels.Add("C" + i);
+        }
+
+        // ================= DISPLAY =================
 
         private void DisplayTableau()
         {
             PrintInline("      ");
-            foreach (var v in variables)
-                PrintInline(v + "\t");
+            foreach (var v in variables) PrintInline(v + "\t");
             Print("RHS");
 
             for (int i = 0; i < tableau.Count; i++)
@@ -201,105 +297,24 @@ namespace LPR381.IP
             }
         }
 
-        private void CuttingSolution()
+        private void DisplaySolution()
         {
-            Print("\n--- CUTTING PLANE SOLUTION ---");
-            int cut = 1;
-            double minRHSRem = 0.5;
-            int varCut = 1;
-
-            finalTableau = tableau;
-            /*for (int i = 1; i < tableau.Count; i++)
+            Print("\n--- OPTIMAL INTEGER SOLUTION ---");
+            for (int i = 0; i < variables.Count; i++)
             {
-                double remRHS = rhs[i] % 1;
-                Print(remRHS.ToString());
-                if (remRHS!=0)
+                string varName = variables[i];
+                if (!varName.StartsWith("x")) continue;
+
+                double value = 0;
+                for (int j = 0; j < basis.Count; j++)
                 {
-                    canCut = true;
-                    break;
-                }                
-            }*/
-
-
-            double temp = 1;
-
-            if(temp < 0)
-            {
-                Print((Math.Abs(temp - Math.Round(temp))-1).ToString());
-            }
-            else
-            {
-                Print((-Math.Abs(temp - Math.Round(temp))).ToString());
+                    if (basis[j] == varName) { value = rhs[j]; break; }
+                }
+                Print(varName + " = " + value.ToString("F3"));
             }
 
-            /*for (int i = 0; i< tableau.Count; i++)
-            {
-                basisVar = basisVar.Substring(1);
-                Print(basisVar);
-                
-            }*/
-            AddRow(1);
-            AddCollumn();
-
-            DisplayTableau();
-            /*while (canCut)
-            {
-                for (int i = 1; i < tableau.Count; i++)
-                {
-                    double remRHS = rhs[i] % 0.5;
-                    if (remRHS <= minRHSRem)
-                    {
-                        if (int.Parse(basis[i].Substring(1)) <= varCut)
-                        {
-                            minRHSRem = remRHS;
-                            cut = i;
-                        }                        
-                    }
-                }
-            }*/
-        }
-
-        private void AddRow(int cutRow)
-        {
-            rowLabels.Add("C" + rowLabels.Count);
-            List<double> newRow = new List<double>();
-            newRow = finalTableau[cutRow];
-            foreach(var v in newRow)
-            {
-                if (v < 0)
-                {
-                    newRow.Add(Math.Abs(v - Math.Round(v)) - 1);
-                }
-                else
-                {
-                    newRow.Add(-Math.Abs(v - Math.Round(v)));
-                }
-                
-            }
-            finalTableau.Add(newRow);
-
-        }
-
-        private void AddCollumn()
-        {
-
-            for (int i = 0; i < finalTableau.Count; i++)
-            {
-                {
-                    if (i < finalTableau.Count - 1)
-                    {
-                        finalTableau[i].Add(0);
-                    }
-                    else
-                    {
-                        finalTableau[i].Add(1);
-                    }
-                }
-
-            }
-
-            int temp = int.Parse(variables[variables.Count - 1].Substring(1))+1;
-            variables.Add("s" + temp);
+            double finalZ = isMax ? rhs[0] : -rhs[0];
+            Print("\nOptimal Z = " + finalZ.ToString("F3"));
         }
     }
 }

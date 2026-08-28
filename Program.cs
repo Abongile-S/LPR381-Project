@@ -257,9 +257,9 @@ namespace LPR381
             CuttingPlane cutting = new CuttingPlane();
             cutting.Solve(canonical, reader.ObjectiveType);
 
-            //OutputWriter.Write(outputFilePath, reader, "", "", "", "", "", cutting.Log);
-            //Console.WriteLine(cutting.Log);
-            //Console.WriteLine($"[OK] Output written to: {outputFilePath}");
+            OutputWriter.Write(outputFilePath, reader, "", "", "", "", "", cutting.Log);
+            Console.WriteLine(cutting.Log);
+            Console.WriteLine($"[OK] Output written to: {outputFilePath}");
         }
 
         // ========== RUN ALL ALGORITHMS ==========
