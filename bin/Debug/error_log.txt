@@ -1,0 +1,270 @@
+2026-08-28 13:42:13 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 221
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 14:46:14 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.AddCollumn() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 264
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 14:51:22 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.AddCollumn() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 264
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 14:54:33 - Program.Main: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Int32.Parse(String s)
+   at LPR381.IP.CuttingPlane.AddCollumn() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 264
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 14:59:13 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.AddCollumn() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 264
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:21:25 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 260
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:24:54 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:32:14 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:33:02 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 276
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:34:37 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:36:51 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:37:33 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:41:18 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:44:20 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:45:44 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 265
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:46:29 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 275
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:46:58 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 277
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:48:24 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 277
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:52:16 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.set_Item(Int32 index, T value)
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 277
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:53:22 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 15:53:34 - Program.Main: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at LPR381.IP.CuttingPlane.DisplayTableau() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 196
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 242
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 16:01:51 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 265
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 16:03:35 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 265
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 239
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 74
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 16:05:29 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 267
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 241
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 75
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 16:09:43 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 267
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 241
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 75
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 16:12:25 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 267
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 241
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 75
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+
+2026-08-28 16:12:48 - Program.Main: Collection was modified; enumeration operation may not execute.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at System.Collections.Generic.List`1.Enumerator.MoveNext()
+   at LPR381.IP.CuttingPlane.AddRow(Int32 cutRow) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 267
+   at LPR381.IP.CuttingPlane.CuttingSolution() in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 241
+   at LPR381.IP.CuttingPlane.Solve(CanonicalForm canonical, String objectiveType) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\IP\CuttingPlane.cs:line 75
+   at LPR381.Program.RunCuttingPlane(InputFileReader reader, String outputFilePath) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 258
+   at LPR381.Program.Main(String[] args) in C:\Users\Aidan\Desktop\LPR381\LPR Project\LPR381-Project\Program.cs:line 130
+

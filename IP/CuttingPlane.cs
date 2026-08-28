@@ -9,361 +9,297 @@ namespace LPR381.IP
 {
     public class CuttingPlane
     {
-        // ===== Configuration =====
-        private double tolerance = 1e-6;
-        private int maxIterations = 100;
-
-        // ===== Private Fields =====
-        private InputFileReader currentReader;
-        private int numVars;
-        private int numConstraints;
-        private List<string> signRestrictions;
-        private string objectiveType;
-
-        private double[] bestSolution;
-        private double bestObjective;
-        private bool solutionFound;
-        private int iteration;
-
         // ===== Logging =====
         private readonly StringBuilder log = new StringBuilder();
         public string Log => log.ToString();
 
-        // ===== Constructor =====
-        public CuttingPlane()
+
+        private List<List<double>> tableau;
+        private List<double> rhs;
+        private List<string> basis;
+        private List<string> variables;
+        private List<string> rowLabels;
+        private string objectiveType;
+        private bool isMax;
+        private List<List<double>> finalTableau;
+
+        public bool IsInfeasible { get; private set; } = false;
+        public bool IsUnbounded { get; private set; } = false;
+
+        //private bool canCut { get; private set; } = false;
+
+        private void Print(string s = "")
         {
-            bestSolution = Array.Empty<double>();
-            bestObjective = 0;
-            solutionFound = false;
-            iteration = 0;
+            Console.WriteLine(s);
+            log.AppendLine(s);
         }
 
-        // ===== Main Solver =====
-        public void Solve(InputFileReader reader)
+        private void PrintInline(string s)
         {
-            try
-            {
-                EventManager.RaiseAlgorithmStarted("Cutting Plane");
-
-                this.currentReader = CloneReader(reader);
-                this.numVars = reader.ObjCoefficients.Count;
-                this.numConstraints = reader.Constraints.Count;
-                this.signRestrictions = new List<string>(reader.SignRestrictions);
-                this.objectiveType = reader.ObjectiveType;
-
-                bestSolution = new double[numVars];
-
-                LogMessage("========================================");
-                LogMessage(" CUTTING PLANE ALGORITHM");
-                LogMessage("========================================");
-                LogMessage($"Objective: {objectiveType.ToUpper()}");
-                LogMessage($"Variables: {numVars}");
-                LogMessage($"Constraints: {numConstraints}");
-                LogMessage($"Binary Variables: {signRestrictions.Count(s => s == "bin")}");
-                LogMessage("");
-
-                LogMessage("--- ITERATION 0: LP RELAXATION ---");
-                var lpResult = SolveLP();
-
-                if (!lpResult.IsFeasible)
-                {
-                    LogMessage("[ERROR] LP relaxation is infeasible.");
-                    EventManager.RaiseError("Cutting Plane", "LP relaxation is infeasible");
-                    return;
-                }
-
-                LogMessage($"LP Relaxation Solution: Z = {lpResult.ObjectiveValue:F3}");
-                LogMessage($"Solution: [{string.Join(", ", lpResult.Solution.Select(v => v.ToString("F3")))}]");
-                LogMessage("");
-
-                if (IsIntegerSolution(lpResult.Solution))
-                {
-                    LogMessage("[SUCCESS] INTEGER SOLUTION FOUND AT LP RELAXATION");
-                    bestSolution = lpResult.Solution;
-                    bestObjective = lpResult.ObjectiveValue;
-                    solutionFound = true;
-                    DisplayBestSolution();
-                    EventManager.RaiseSolutionFound("Cutting Plane", bestObjective, bestSolution);
-                    return;
-                }
-
-                LogMessage("--- STARTING GOMORY CUTS ---");
-                LogMessage("");
-
-                int cutCount = 0;
-                bool optimalFound = false;
-
-                while (iteration < maxIterations && !optimalFound)
-                {
-                    iteration++;
-                    cutCount++;
-
-                    LogMessage($"--- ITERATION {iteration}: ADDING GOMORY CUT ---");
-
-                    // Find fractional variable
-                    int fracVarIndex = -1;
-                    double fracValue = 0;
-                    double fracPart = 0;
-
-                    for (int i = 0; i < lpResult.Solution.Length; i++)
-                    {
-                        if (signRestrictions[i] == "bin" || signRestrictions[i] == "int")
-                        {
-                            double val = Math.Abs(lpResult.Solution[i] - Math.Round(lpResult.Solution[i]));
-                            if (val > tolerance)
-                            {
-                                fracVarIndex = i;
-                                fracValue = lpResult.Solution[i];
-                                fracPart = val;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (fracVarIndex == -1)
-                    {
-                        LogMessage("[SUCCESS] All basic variables are integer.");
-                        optimalFound = true;
-                        break;
-                    }
-
-                    // Generate Gomory cut
-                    double floorVal = Math.Floor(fracValue);
-                    double ceilVal = Math.Ceiling(fracValue);
-                    string cut;
-
-                    if (fracPart > 0.5)
-                    {
-                        cut = $"x{fracVarIndex + 1} <= {floorVal:F0}";
-                    }
-                    else
-                    {
-                        cut = $"x{fracVarIndex + 1} >= {ceilVal:F0}";
-                    }
-
-                    LogMessage($"Gomory Cut Generated:");
-                    LogMessage($"  {cut}");
-
-                    // Add cut constraint
-                    var parts = cut.Split(' ');
-                    if (parts.Length >= 3)
-                    {
-                        string varPart = parts[0];
-                        string op = parts[1];
-                        string valPart = parts[2];
-
-                        int varIndex = int.Parse(varPart.Substring(1)) - 1;
-                        double value = double.Parse(valPart);
-
-                        var coeffs = new double[numVars];
-                        coeffs[varIndex] = (op == "<=") ? 1 : -1;
-                        double rhs = (op == "<=") ? value : -value;
-
-                        currentReader.Constraints.Add(new Constraint(
-                            coeffs.ToList(),
-                            "<=",
-                            rhs
-                        ));
-
-                        numConstraints++;
-                    }
-
-                    LogMessage($"Re-solving with cut {cutCount}...");
-                    lpResult = SolveLP();
-
-                    if (!lpResult.IsFeasible)
-                    {
-                        LogMessage("[ERROR] LP became infeasible after adding cut.");
-                        break;
-                    }
-
-                    LogMessage($"New Solution: Z = {lpResult.ObjectiveValue:F3}");
-                    LogMessage($"Solution: [{string.Join(", ", lpResult.Solution.Select(v => v.ToString("F3")))}]");
-
-                    if (IsIntegerSolution(lpResult.Solution))
-                    {
-                        LogMessage("[SUCCESS] INTEGER SOLUTION FOUND!");
-                        bestSolution = lpResult.Solution;
-                        bestObjective = lpResult.ObjectiveValue;
-                        solutionFound = true;
-                        optimalFound = true;
-                        EventManager.RaiseSolutionFound("Cutting Plane", bestObjective, bestSolution);
-                    }
-
-                    LogMessage("");
-                }
-
-                if (iteration >= maxIterations)
-                {
-                    LogMessage($"[WARNING] Max iterations reached ({maxIterations})");
-                    ErrorHandler.HandleWarning($"Max iterations reached ({maxIterations})", "Cutting Plane");
-                }
-
-                LogMessage("");
-                LogMessage("--- BEST CANDIDATE ---");
-                if (solutionFound)
-                {
-                    DisplayBestSolution();
-                    EventManager.RaiseAlgorithmCompleted("Cutting Plane", $"Solution found: Z = {bestObjective:F3}");
-                }
-                else
-                {
-                    LogMessage("[ERROR] No feasible integer solution found.");
-                    EventManager.RaiseError("Cutting Plane", "No feasible integer solution found");
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorHandler.HandleException(ex, "Cutting Plane");
-                EventManager.RaiseError("Cutting Plane", ex.Message);
-                LogMessage($"[ERROR] {ex.Message}");
-            }
+            Console.Write(s);
+            log.Append(s);
         }
 
-        private LPSolutionResult SolveLP()
+        public void Solve(CanonicalForm canonical, string objectiveType)
         {
-            var result = new LPSolutionResult();
+            this.objectiveType = objectiveType;
+            this.isMax = canonical.IsMax;
+            this.variables = new List<string>(canonical.Variables);
+            this.basis = new List<string>(canonical.Basis);
+            this.rhs = new List<double>(canonical.RHS);
 
-            try
+            tableau = new List<List<double>>();
+            foreach (var row in canonical.Tableau)
+                tableau.Add(new List<double>(row));
+
+            rowLabels = new List<string>();
+            rowLabels.Add("z");
+            for (int i = 1; i < tableau.Count; i++)
+                rowLabels.Add("C" + i);
+
+            Print("\n===== PRIMAL SIMPLEX ALGORITHM =====");
+            Print("Objective: " + objectiveType);
+
+            int iteration = 0;
+            int maxIterations = 200;
+
+            while (iteration < maxIterations)
             {
-                var revised = new RevisedSimplex();
-                revised.Solve(currentReader);
+                Print("\n--- Iteration " + iteration + " ---");
+                DisplayTableau();
 
-                result.Solution = ParseSolution(revised.Log);
-                result.ObjectiveValue = ParseObjective(revised.Log);
-                result.IsFeasible = true;
-            }
-            catch (Exception)
-            {
-                result.IsFeasible = false;
-                result.Solution = new double[numVars];
-                result.ObjectiveValue = double.MinValue;
+                if (IsOptimal())
+                {
+                    Print("\nOPTIMAL PRIMAL SOLUTION FOUND!");
+                    if (!CheckFeasibility())
+                        CuttingSolution();
+                    break;
+                }
+
+                int pivotCol = FindPivotColumn();
+                if (pivotCol == -1)
+                {
+                    Print("\nUNBOUNDED SOLUTION!");
+                    IsUnbounded = true;
+                    break;
+                }
+
+                int pivotRow = FindPivotRow(pivotCol);
+                if (pivotRow == -1)
+                {
+                    Print("\nUNBOUNDED SOLUTION!");
+                    IsUnbounded = true;
+                    break;
+                }
+
+                Print("Pivot Column: " + variables[pivotCol]);
+                Print("Pivot Row: " + rowLabels[pivotRow]);
+
+                Pivot(pivotRow, pivotCol);
+                basis[pivotRow] = variables[pivotCol];
+
+                iteration++;
             }
 
-            return result;
+            if (iteration >= maxIterations)
+                Print("\nMax iterations reached (check for cycling).");
         }
 
-        private bool IsIntegerSolution(double[] solution)
+        private bool IsOptimal()
         {
-            for (int i = 0; i < solution.Length; i++)
+            List<double> zRow = tableau[0];
+            for (int j = 0; j < zRow.Count; j++)
             {
-                if (signRestrictions[i] == "bin" || signRestrictions[i] == "int")
-                {
-                    double val = Math.Abs(solution[i] - Math.Round(solution[i]));
-                    if (val > tolerance)
-                        return false;
-
-                    if (signRestrictions[i] == "bin")
-                    {
-                        if (solution[i] < -tolerance || solution[i] > 1 + tolerance)
-                            return false;
-                    }
-                }
+                if (zRow[j] < -0.0001)
+                    return false;
             }
             return true;
         }
 
-        private double[] ParseSolution(string logText)
+        private int FindPivotColumn()
         {
-            var values = new double[numVars];
-            var lines = logText.Split('\n');
+            List<double> zRow = tableau[0];
+            int pivotCol = -1;
+            double minVal = 0;
 
-            foreach (var line in lines)
+            for (int j = 0; j < zRow.Count; j++)
             {
-                for (int i = 0; i < numVars; i++)
+                if (zRow[j] < minVal)
                 {
-                    if (line.Contains($"x{i + 1} ="))
+                    minVal = zRow[j];
+                    pivotCol = j;
+                }
+            }
+            return pivotCol;
+        }
+
+        private int FindPivotRow(int pivotCol)
+        {
+            int pivotRow = -1;
+            double minRatio = double.MaxValue;
+
+            for (int i = 1; i < tableau.Count; i++)
+            {
+                if (tableau[i][pivotCol] > 0.0001)
+                {
+                    double ratio = rhs[i] / tableau[i][pivotCol];
+                    if (ratio < minRatio)
                     {
-                        var parts = line.Split('=');
-                        if (parts.Length >= 2)
-                        {
-                            string valStr = parts[1].Trim().Replace(",", ".");
-                            if (double.TryParse(valStr, System.Globalization.NumberStyles.Float,
-                                System.Globalization.CultureInfo.InvariantCulture, out double val))
-                            {
-                                values[i] = val;
-                            }
-                        }
+                        minRatio = ratio;
+                        pivotRow = i;
                     }
                 }
             }
-
-            return values;
+            return pivotRow;
         }
 
-        private double ParseObjective(string logText)
+        private void Pivot(int pivotRow, int pivotCol)
         {
-            var lines = logText.Split('\n');
-            foreach (var line in lines)
+            double pivotElement = tableau[pivotRow][pivotCol];
+
+            for (int j = 0; j < tableau[pivotRow].Count; j++)
+                tableau[pivotRow][j] /= pivotElement;
+            rhs[pivotRow] /= pivotElement;
+
+            for (int i = 0; i < tableau.Count; i++)
             {
-                if (line.Contains("Optimal Z =") || line.Contains("Z ="))
+                if (i == pivotRow) continue;
+                double factor = tableau[i][pivotCol];
+                for (int j = 0; j < tableau[i].Count; j++)
+                    tableau[i][j] -= factor * tableau[pivotRow][j];
+                rhs[i] -= factor * rhs[pivotRow];
+            }
+        }
+
+        private bool CheckFeasibility()
+        {
+            for (int i = 1; i < basis.Count; i++)
+            {
+                if (basis[i].StartsWith("a") && rhs[i] > 1e-6)
                 {
-                    var parts = line.Split('=');
-                    if (parts.Length >= 2)
-                    {
-                        string valStr = parts[1].Trim().Replace(",", ".");
-                        if (double.TryParse(valStr, System.Globalization.NumberStyles.Float,
-                            System.Globalization.CultureInfo.InvariantCulture, out double val))
-                        {
-                            return val;
-                        }
-                    }
+                    Print("\n*** MODEL IS INFEASIBLE (artificial variable " + basis[i] + " remains positive) ***");
+                    IsInfeasible = true;
+                    return true;
                 }
             }
-            return double.MinValue;
+            return false;
         }
 
-        private InputFileReader CloneReader(InputFileReader original)
+        private void DisplayTableau()
         {
-            var clone = new InputFileReader();
-            var type = typeof(InputFileReader);
+            PrintInline("      ");
+            foreach (var v in variables)
+                PrintInline(v + "\t");
+            Print("RHS");
 
-            type.GetProperty("ObjectiveType")?.SetValue(clone, original.ObjectiveType);
-            type.GetProperty("ObjCoefficients")?.SetValue(clone, new List<double>(original.ObjCoefficients));
-            type.GetProperty("SignRestrictions")?.SetValue(clone, new List<string>(original.SignRestrictions));
-
-            var newConstraints = new List<Constraint>();
-            foreach (var c in original.Constraints)
+            for (int i = 0; i < tableau.Count; i++)
             {
-                newConstraints.Add(new Constraint(
-                    new List<double>(c.Coefficients),
-                    c.Relation,
-                    c.RHS
-                ));
+                PrintInline(rowLabels[i] + "[" + basis[i] + "]\t");
+                for (int j = 0; j < tableau[i].Count; j++)
+                    PrintInline(tableau[i][j].ToString("F3") + "\t");
+                Print(rhs[i].ToString("F3"));
             }
-            type.GetProperty("Constraints")?.SetValue(clone, newConstraints);
-
-            return clone;
         }
 
-        private void LogMessage(string message, int indent = 0)
+        private void CuttingSolution()
         {
-            string prefix = new string(' ', indent * 2);
-            string line = $"{prefix}{message}";
-            Console.WriteLine(line);
-            log.AppendLine(line);
-        }
+            Print("\n--- CUTTING PLANE SOLUTION ---");
+            int cut = 1;
+            double minRHSRem = 0.5;
+            int varCut = 1;
 
-        private void DisplayBestSolution()
-        {
-            LogMessage("========================================");
-            LogMessage(" BEST INTEGER SOLUTION");
-            LogMessage("========================================");
-            for (int i = 0; i < bestSolution.Length; i++)
+            finalTableau = tableau;
+            /*for (int i = 1; i < tableau.Count; i++)
             {
-                LogMessage($"x{i + 1} = {bestSolution[i]:F3}");
+                double remRHS = rhs[i] % 1;
+                Print(remRHS.ToString());
+                if (remRHS!=0)
+                {
+                    canCut = true;
+                    break;
+                }                
+            }*/
+
+
+            double temp = 1;
+
+            if(temp < 0)
+            {
+                Print((Math.Abs(temp - Math.Round(temp))-1).ToString());
             }
-            LogMessage("");
-            LogMessage($"Optimal Z = {bestObjective:F3}");
-            LogMessage($"Iterations: {iteration}");
-            LogMessage("========================================");
+            else
+            {
+                Print((-Math.Abs(temp - Math.Round(temp))).ToString());
+            }
+
+            /*for (int i = 0; i< tableau.Count; i++)
+            {
+                basisVar = basisVar.Substring(1);
+                Print(basisVar);
+                
+            }*/
+            AddRow(1);
+            AddCollumn();
+
+            DisplayTableau();
+            /*while (canCut)
+            {
+                for (int i = 1; i < tableau.Count; i++)
+                {
+                    double remRHS = rhs[i] % 0.5;
+                    if (remRHS <= minRHSRem)
+                    {
+                        if (int.Parse(basis[i].Substring(1)) <= varCut)
+                        {
+                            minRHSRem = remRHS;
+                            cut = i;
+                        }                        
+                    }
+                }
+            }*/
         }
 
-        private class LPSolutionResult
+        private void AddRow(int cutRow)
         {
-            public double[] Solution { get; set; } = Array.Empty<double>();
-            public double ObjectiveValue { get; set; }
-            public bool IsFeasible { get; set; } = true;
+            rowLabels.Add("C" + rowLabels.Count);
+            List<double> newRow = new List<double>();
+            newRow = finalTableau[cutRow];
+            foreach(var v in newRow)
+            {
+                if (v < 0)
+                {
+                    newRow.Add(Math.Abs(v - Math.Round(v)) - 1);
+                }
+                else
+                {
+                    newRow.Add(-Math.Abs(v - Math.Round(v)));
+                }
+                
+            }
+            finalTableau.Add(newRow);
+
+        }
+
+        private void AddCollumn()
+        {
+
+            for (int i = 0; i < finalTableau.Count; i++)
+            {
+                {
+                    if (i < finalTableau.Count - 1)
+                    {
+                        finalTableau[i].Add(0);
+                    }
+                    else
+                    {
+                        finalTableau[i].Add(1);
+                    }
+                }
+
+            }
+
+            int temp = int.Parse(variables[variables.Count - 1].Substring(1))+1;
+            variables.Add("s" + temp);
         }
     }
 }

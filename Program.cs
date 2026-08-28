@@ -3,6 +3,7 @@ using System.IO;
 using LPR381.IP;
 using LPR381.Events;
 using LPR381.Utils;
+using System.Collections.Generic;
 
 namespace LPR381
 {
@@ -103,7 +104,7 @@ namespace LPR381
                     Console.WriteLine("  2. Revised Primal Simplex");
                     Console.WriteLine("  3. Branch and Bound Simplex (IP)");
                     Console.WriteLine("  4. Branch and Bound Knapsack (IP)");
-                    Console.WriteLine("  5. Cutting Plane (IP)");
+                    Console.WriteLine("  5. Simplex in to Cutting Plane (IP)");
                     Console.WriteLine("  6. Run All Algorithms");
                     Console.WriteLine("  0. Exit");
                     Console.WriteLine();
@@ -191,6 +192,8 @@ namespace LPR381
             OutputWriter.Write(outputFilePath, reader, canonical.GetDisplayString(), primal.Log, "");
             Console.WriteLine(primal.Log);
             Console.WriteLine($"[OK] Output written to: {outputFilePath}");
+
+       
         }
 
         // ========== REVISED SIMPLEX ==========
@@ -245,12 +248,18 @@ namespace LPR381
             Console.WriteLine("\n>>> Running Cutting Plane...");
             Console.WriteLine(new string('-', 50));
 
-            var cutting = new CuttingPlane();
-            cutting.Solve(reader);
 
-            OutputWriter.Write(outputFilePath, reader, "", "", "", "", "", cutting.Log);
-            Console.WriteLine(cutting.Log);
-            Console.WriteLine($"[OK] Output written to: {outputFilePath}");
+            CanonicalForm canonical = new CanonicalForm();
+            canonical.Convert(reader);
+            canonical.Display();
+
+
+            CuttingPlane cutting = new CuttingPlane();
+            cutting.Solve(canonical, reader.ObjectiveType);
+
+            //OutputWriter.Write(outputFilePath, reader, "", "", "", "", "", cutting.Log);
+            //Console.WriteLine(cutting.Log);
+            //Console.WriteLine($"[OK] Output written to: {outputFilePath}");
         }
 
         // ========== RUN ALL ALGORITHMS ==========
